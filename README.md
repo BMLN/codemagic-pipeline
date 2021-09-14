@@ -13,17 +13,17 @@
 - git api key (for versioning)
 
 
-## functionality
+
+
+## CI/CD
+
+### functionality
 1. git(lab)-ci sends api call to codemagic to start the build
 2. use codemagics' app-store-connect fetch-signing-files to get the signing profiles on to the build machine
 3. run fastlane build
 4. run fastlane pilot
 
-
-## CI/CD
-
 ### git(lab) - CI/CD
-
 We can execute commands everytime we push to the repository where we develop. Here, it will call the codemagic-API
 and pass the protected variables of the repository:
 - CODEMAGIC_API_KEY
