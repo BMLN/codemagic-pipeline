@@ -1,0 +1,67 @@
+# Check out https://docs.codemagic.io/yaml/building-a-react-native-app/ for more information
+# Please review and update values
+
+workflows:
+  
+    react-native-ios:
+        name: React Native iOS
+        max_build_duration: 30
+        instance_type: mac_mini
+        environment:
+            vars:
+                XCODE_WORKSPACE: "project.xcworkspace" # <-- Put the name of your Xcode workspace here
+                XCODE_SCHEME: "metail.xcscheme" # <-- Put the name of your Xcode scheme here
+                BUNDLE_ID: "com.metail" # <-- Put your Bundle Id here e.g com.domain.myapp
+                
+                # fastlane configuration:
+                # APP_STORE_CONNECT_API_KEY_KEY_ID <-- Put your fastlane-App Store Connect API Key ID here
+                # APP_STORE_CONNECT_API_KEY_KEY <-- Put your fastlane-App Store Connect API Key here
+                # APP_STORE_CONNECT_API_KEY_ISSUER_ID <-- Put your fastlane-App Store Connect API Key here
+            node: latest
+            xcode: latest
+            cocoapods: default
+        
+
+        scripts:
+        
+            - name: set up repository
+              script: |
+                yarn install
+                cd ios
+                pod install
+        
+            - name: initialize keychain
+              script: |
+                keychain initialize
+                         
+            - name: set up code-signing
+              script: |
+                echo "fetch app-store-connect certificates:"
+                cd ios/fastlane/
+                app-store-connect fetch-signing-files "$BUNDLE_ID" --private-key "$APP_STORE_CONNECT_API_KEY_KEY" --issuer-id "$APP_STORE_CONNECT_API_KEY_ISSUER_ID" --key-id "$APP_STORE_CONNECT_API_KEY_KEY_ID" --certificate-key "$IOS_DISTRIBUTION_PRIVATE_KEY" --type IOS_APP_STORE --verbose --log-api-calls --create 
+
+                echo "add certs:"
+                keychain add-certificates
+                
+                cd ..
+                cd ..
+                echo "xcode:"
+                xcode-project use-profiles
+                security find-identity -v -p codesigning
+                
+            - name: run fastlane...to the moon! #make sure fastlane env is set!
+              script: |
+                cd ios
+                bundle install 
+                gem install fastlane -N
+                gem install bundler:1.17.2
+                echo "installed"
+                
+                bundle update
+                bundle update fastlane
+                echo "updated"
+
+                bundle exec fastlane build_release
+                bundle exec fastlane flight
+                echo "done!"
+
