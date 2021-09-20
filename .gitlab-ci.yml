@@ -27,8 +27,8 @@ build:test:iOS:package:
                 "APP_STORE_CONNECT_API_KEY_ISSUER_ID": "'"$APP_STORE_CONNECT_ISSUER_ID"'",
                 "APP_STORE_CONNECT_API_KEY_KEY_ID": "'"$APP_STORE_CONNECT_KEY_IDENTIFIER"'",
                 "IOS_DISTRIBUTION_PRIVATE_KEY": "'"$FORMATTED_DISTRIBUTION_KEY"'",
-                "VERSION": "'"$VERSION"'",
-                "BUILD_COUNT": "'"$BUILD_COUNT"'"
+                "VERSION": "'"1.337"'",
+                "BUILD_COUNT": "'"1337"'"
               }
           }
         }' \

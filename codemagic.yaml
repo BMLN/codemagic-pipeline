@@ -48,8 +48,9 @@ workflows:
                 echo "xcode:"
                 xcode-project use-profiles
                 security find-identity -v -p codesigning
-                
-            - name: run fastlane...to the moon! #make sure fastlane env is set!
+
+            #make sure fastlane env is set!
+            - name: run fastlane...to the moon!
               script: |
                 cd ios
                 bundle install 
