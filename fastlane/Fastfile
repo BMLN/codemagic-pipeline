@@ -1,0 +1,54 @@
+#we use environment variables to set parameters that depend on your build
+#each function parameter can be set by an environment variable with the correct name:
+#<functionname>_<paramtername> 
+#so for gym(configuration: "Release") we can set the parameter with <export GYM_CONFIGURATION="Release"> as an environment variable
+
+platform :android do
+
+    lane :build do
+        gradle(task: "clean assembleRelease")
+    end
+
+    lane :playstore do 
+        upload_to_play_store(apk: "./app/build/outputs/apk/release/app-release.apk")
+    end
+
+end
+
+
+platform :ios do
+
+    private_lane :api_key do
+        api_key = app_store_connect_api_key(
+        #app_store_connect_api_key_key_content should be set through environment variable (APP_STORE_CONNECT_API_KEY_KEY)
+        #app_store_connect_api_key_key_id is set through environment variable
+        #app_store_connect_api_key_issuer_id is set through environment variable
+            in_house: false
+        )
+    end
+
+    lane :build_release do
+        sigh(
+            api_key: api_key
+            #app_identifier is set through environment variable
+        )
+        gym(
+            configuration:"Release",
+            #sdk:"insert correct sdk",
+            export_method:"app-store",
+            output_directory: "./output/",
+            output_name:"newbuild",       
+            verbose: true,
+            skip_profile_detection: true,
+        )
+    end
+
+    lane :flight do
+        pilot(
+            skip_waiting_for_build_processing: true,
+            api_key:api_key,
+            ipa: "./output/newbuilda.ipa",
+        )
+    end
+
+end

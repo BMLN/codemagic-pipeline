@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  codemagic:
+    runs-on: ubuntu-latest
+    env: # update with your values!!!
+      APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }} #"<insert-your-value-here>"
+      APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} #"<insert-your-value-here>"
+      APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }} #"<insert-your-value-here>"
+      IOS_DISTRIBUTION_PRIVATE_KEY: ${{ secrets.IOS_DISTRIBUTION_PRIVATE_KEY }} #"<insert-your-value-here>" #ANY RSA 2048 bit private key, you can use ssh-keygen -t rsa -b 2048 -m PEM -f ./new_key -q -N "" to generate one
+      CODEMAGIC_USER_API_KEY: ${{ secrets.CODEMAGIC_USER_API_KEY }} #"<insert-your-value-here>"
+      CODEMAGIC_APP_ID: "61484a5c2d7e14001034e62c"
+      BUNDLE_ID: "com.metail" #"<insert-your-value-here>"
+      XCODE_SCHEME: "metail" #"<insert-your-value-here>"
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a multi-line script
+        run: |
+          
+          while read -r line; do export FORMATTED_API_KEY=$FORMATTED_API_KEY$line\\n; done < <(echo $"$APP_STORE_CONNECT_API_KEY")
+          while read -r line; do export FORMATTED_DISTRIBUTION_KEY=$FORMATTED_DISTRIBUTION_KEY$line\\n; done < <(echo $"$IOS_DISTRIBUTION_PRIVATE_KEY")
+
+          curl -H "Content-Type:application/json" -H "x-auth-token:$CODEMAGIC_USER_API_KEY" --data \
+          '{
+            "appId": "'"$CODEMAGIC_APP_ID"'",
+            "workflowId": "react-native-ios",
+            "branch": "master",
+            "environment": 
+              {
+                "variables":
+                  {
+                    "APP_STORE_CONNECT_API_KEY_KEY": "'"$FORMATTED_API_KEY"'",
+                    "APP_STORE_CONNECT_API_KEY_KEY_ID": "'"$APP_STORE_CONNECT_API_KEY_ID"'",
+                    "APP_STORE_CONNECT_API_KEY_ISSUER_ID": "'"$APP_STORE_CONNECT_API_KEY_ISSUER_ID"'",
+                    "IOS_DISTRIBUTION_PRIVATE_KEY": "'"$FORMATTED_DISTRIBUTION_KEY"'",
+                    "BUNDLE_ID": "'"$BUNDLE_ID"'",
+                    "SIGH_APP_IDENTIFIER": "'"$BUNDLE_ID"'",
+                    "GYM_SCHEME": "'"$XCODE_SCHEME"'"
+                  }
+              }
+            }' \
+            "https://api.codemagic.io/builds"
