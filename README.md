@@ -2,23 +2,23 @@
 
 
 ## prerequisites 
-
-- appledeveloper account
-- $APP_STORE_CONNECT_API_KEY
-- $APP_STORE_CONNECT_API_KEY_ISSUER_ID
-- $APP_STORE_CONNECT_API_KEY_KEY_ID
+1. App Store Connect Api Key and specific information about it:
+   - APP_STORE_CONNECT_API_KEY
+   - APP_STORE_CONNECT_API_KEY_KEY_ID
+   - APP_STORE_CONNECT_API_KEY_ISSUER_ID
+2. Codemagic integration with your repository, that includes:
+    - Codemagic User API Key
+    - Codemagic AppID
+3. the rest of the App information:
+    - BUNDLE_ID
+    - XCODE_SCHEME
 #####
-- a new private key (generate with ...)
-- codemagic api key
-- git api key (for versioning)
-
-
 
 
 ## CI/CD
 
 ### functionality
-1. git(lab)-ci sends api call to codemagic to start the build
+1. git(lab)-ci sends an api call to codemagic to start the build
 2. use codemagics' app-store-connect fetch-signing-files to get the signing profiles on to the build machine
 3. run fastlane build
 4. run fastlane pilot
