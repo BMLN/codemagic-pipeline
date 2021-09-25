@@ -2,7 +2,7 @@
 #### react-native iOS build/deployment CI/CD Template
 
 ## prerequisites 
-1. App Store Connect Api Key and specific information about it:
+1. App Store Connect API Key, including:
    - APP_STORE_CONNECT_API_KEY
    - APP_STORE_CONNECT_API_KEY_KEY_ID
    - APP_STORE_CONNECT_API_KEY_ISSUER_ID
