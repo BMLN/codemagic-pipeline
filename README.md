@@ -34,8 +34,9 @@ Codemagic offers a service that makes it possible to run our iOS- build and depl
 
 codemagic will now use the environment variables we passed in our API-call to build and deploy 
 our application with the help of fastlane - <b>*on macOS*</b>.
-Before our assigned machine can do that we need to fetch the right certificates from apple 
-or generate a matching one through the APP-STORE-CONNECT-API and install fastlane.
+Before our assigned machine can do that we need to 1. fetch the right certificates from apple 
+or generate a matching one through the APP-STORE-CONNECT-API 2. install the project dependencies 3. install fastlane\
+Now, finally we are ready to go!
 
 
 ## fastlane
