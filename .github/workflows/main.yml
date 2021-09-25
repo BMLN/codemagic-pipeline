@@ -14,9 +14,9 @@ jobs:
       APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }} #"<insert-your-value-here>"
       IOS_DISTRIBUTION_PRIVATE_KEY: ${{ secrets.IOS_DISTRIBUTION_PRIVATE_KEY }} #"<insert-your-value-here>" #ANY RSA 2048 bit private key, you can use ssh-keygen -t rsa -b 2048 -m PEM -f ./new_key -q -N "" to generate one
       CODEMAGIC_USER_API_KEY: ${{ secrets.CODEMAGIC_USER_API_KEY }} #"<insert-your-value-here>"
-      CODEMAGIC_APP_ID: "61484a5c2d7e14001034e62c"
-      BUNDLE_ID: "com.metail" #"<insert-your-value-here>"
-      XCODE_SCHEME: "metail" #"<insert-your-value-here>"
+      CODEMAGIC_APP_ID: #"<insert-your-value-here>"
+      BUNDLE_ID: #"<insert-your-value-here>"
+      XCODE_SCHEME: #"<insert-your-value-here>"
 
     steps:
       - uses: actions/checkout@v2
