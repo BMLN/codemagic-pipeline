@@ -1,5 +1,5 @@
 # codemagic-pipeline
-#### react-native iOS build/deployment-pipeline
+#### react-native iOS build/deployment CI/CD Template
 
 ## prerequisites 
 1. App Store Connect Api Key and specific information about it:
@@ -20,7 +20,7 @@
 ## CI/CD
 
 ### functionality
-1. git-ci sends an api call to codemagic to start the build
+1. send an api call to codemagic to start the build with git CI/CD
 2. use codemagics' app-store-connect fetch-signing-files to get the signing profiles on to the build machine
 3. run fastlane build
 4. run fastlane pilot
