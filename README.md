@@ -1,6 +1,5 @@
 # codemagic-pipeline
 #### react-native iOS build/deployment CI/CD Template
-## project-structure 
 
 needed project structure:
 
