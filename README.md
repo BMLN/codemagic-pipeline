@@ -1,5 +1,13 @@
 # codemagic-pipeline
 #### react-native iOS build/deployment CI/CD Template
+## project-structure 
+
+needed project structure:
+
+      |
+      |___/src/
+      |___/ios/
+      |___/android/
 
 ## prerequisites 
 1. App Store Connect API Key, including:
