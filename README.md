@@ -1,8 +1,7 @@
 # codemagic-pipeline
 #### react-native iOS build/deployment CI/CD Template
 
-needed project structure:
-
+      project folder/
       |
       |___/src/
       |___/ios/
